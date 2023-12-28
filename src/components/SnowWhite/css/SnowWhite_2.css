@@ -1,0 +1,53 @@
+/* SnowWhite_2.css */
+.dialogue-container {
+    display: flex;
+    align-items: flex-start; /* 사진 위쪽에 정렬 */
+    margin-bottom: 10px;
+  }
+  
+  .speaker-image {
+    width: 100px; /* 이미지 너비 조절 */
+    height: auto; /* 이미지 높이 자동 조절 */
+    margin-right: 10px;
+  }
+  
+  .dialogue-text {
+    background-color: #f0f0f0; /* 대화 텍스트 배경색 */
+    padding: 10px; /* 대화 텍스트 패딩 */
+    border-radius: 5px; /* 대화 텍스트 둥근 모서리 */
+    flex: 1; /* 대화 텍스트가 남은 공간을 차지하도록 설정 */
+  }
+  
+  /* 스피커 이름 스타일링 */
+  .speaker-name {
+    font-weight: bold; /* 스피커 이름 굵게 */
+    margin-right: 5px;
+  }
+
+.popup-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    height: 60vw;
+    transform: translate(-50%, -50%);
+    border: 2px solid #000;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 999;
+    background-size: cover;
+    color: #000;
+    position: relative;
+  }
+  
+  .popup-content p {
+    /* Your paragraph styles here */
+    position: relative;
+  }
+  
+  .popup-content button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* Your button styles here */
+  }
