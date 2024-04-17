@@ -1,0 +1,64 @@
+<!-- login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/signin.css' %}">
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Signin</title>
+        <script>
+
+            function signin() {
+                const username = $('#username').val();
+                const password = $('#password').val();
+                const password_check = $('#passwordCheck').val();
+    
+                // Make an AJAX request to the Django view
+                var csrftoken = Cookies.get('csrftoken');
+                $.ajaxSetup({
+                    headers: { 'X-CSRFToken': csrftoken }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "usersignin" %}',
+                    data: {
+                        username: username,
+                        password: password,
+                        password_check: password_check
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        // Handle the success response
+                        console.log(response);
+                        if (response.status == 'success') {
+                            alert("성공했어요!");
+                            window.location.href = '{% url "userlogin" %}';
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle the error response
+                        console.error('AJAX error:', status, error);
+                        alert(error);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div class="login-container">
+            <h2>처음 시작하기</h2>
+            <form id="loginForm">
+                {% csrf_token %}
+                <input type="text" name="username" id="username" placeholder="나의 이름은..." required>
+                <input type="password" name="password" id="password" placeholder="암호 정하기!" required>
+                <input type="password_check" name="passwordCheck" id="passwordCheck" placeholder="암호 다시 확인!" required>
+                <button type="button" onclick="signin()">작성완료!</button>
+            </form>
+        </div>
+    </body>
+</html>

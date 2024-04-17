@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snow White - Part test - 05</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_common.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_test.css' %}">
+    <script>
+
+        var user = {
+            username: "{{ user.username }}",
+        };
+
+        $(document).ready(function() {
+            const conversations = {{ conversations|safe }};
+            let currentLine = 0;
+            const container = $('.conversation-container');
+            const dragdrop = $('.drag-drop');
+            const robotName = "{{ user.robotname }}";
+        
+            const displayConversation = () => {
+                if (currentLine < conversations.length) {
+                    const item = $('<div>').addClass('dialogue-container');
+                    const text = $('<p>').addClass('dialogue-text').text(conversations[currentLine].text.replace(/robot/g, robotName));
+                    if (conversations[currentLine].image) {
+                        const img = $('<img>').addClass('speaker-image').attr('src', "{% static '' %}" + conversations[currentLine].image).attr('alt', 'Image');
+                        item.append(img);
+                    }
+                    if (conversations[currentLine].image) {
+                        if (conversations[currentLine].speaker == 'robot'){
+                            const speakerName = $('<span>').addClass('speaker-name').text(robotName + ':');
+                            text.prepend(speakerName);
+                        }
+                        else{
+                            const speakerName = $('<span>').addClass('speaker-name').text(conversations[currentLine].speaker + ':');
+                            text.prepend(speakerName);
+                        }
+                        
+                    }
+                    item.append(text);
+                    container.append(item.hide().fadeIn(1000));
+        
+                    $('html, body').animate({
+                        scrollTop: $(document).height()
+                    }, 1000);
+        
+                    currentLine++;
+                } else {
+                    clearInterval(conversationInterval);
+                    dragdrop.show();
+                }
+            };
+        
+            const conversationInterval = setInterval(displayConversation, 7000); // 2-second interval for demonstration
+            displayConversation(); // Show the first conversation immediately
+        });
+        
+        function savepage() {
+            const username = user.username
+        
+            // Make an AJAX request to the Django view
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajaxSetup({
+                headers: { 'X-CSRFToken': csrftoken }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "savepage" %}',
+                data: {
+                    username: username,
+                    fairytale: 'snowwhite',
+                    page: '25'
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Handle the success response
+                    console.log(response);
+                    if (response.status == 'success') {
+                        window.location.href = '{% url "fairytale_home" %}';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+        
+        function logout() {
+            // Make an AJAX request to the Django view for logging out
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "logout_and_home" %}',
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function(response) {
+                    // Redirect to the home page after successful logout
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+
+
+        var originalDragItems = document.querySelectorAll(".drag-item");
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+        
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            var draggedElement = document.getElementById(data);
+        
+            // Clone the dragged element to preserve the original
+            var clone = draggedElement.cloneNode(true);
+            clone.setAttribute("draggable", "true");
+            clone.setAttribute("id", "clone_" + data);
+            
+            // Append the clone to the drop box
+            event.target.appendChild(clone);
+        }
+        
+        function checkAnswer() {
+            var dropBox = document.getElementById("dragDropBox");
+            var answer = dropBox.innerText.trim().toLowerCase();
+            const container = $('.drag-drop');
+        
+            // Replace 'fine' with the correct answer
+            if (answer === "85") {
+                alert("잘했어!!! 정답이야!");
+                const nextButton = $('<a>').attr('href', "{% url 'snowwhite_26' %}").addClass('next-button').text('다 풀었다!');
+                container.append(nextButton);
+            } else {
+                alert("으음... 다시 생각해보자... 코드를 다시 작성해볼까?");
+            }
+        }
+        
+        function clearAnswer() {
+            var dropBox = document.getElementById("dragDropBox");
+            dropBox.innerHTML = "";
+        
+            // Restore draggable items to their original state
+            originalDragItems.forEach(function (item) {
+                var clone = item.cloneNode(true);
+                clone.setAttribute("draggable", "true");
+                clone.setAttribute("id", item.id);
+                dropBox.appendChild(clone);
+            });
+        }
+
+        function executeCode() {
+            // Get the code from the textarea
+            const code = $('#python-code').val();
+    
+            // Make an AJAX request to the Django view
+            var csrftoken = Cookies.get('csrftoken'); 
+                
+            // set the CSRF token in the AJAX headers 
+            $.ajaxSetup({ 
+                headers: { 'X-CSRFToken': csrftoken } 
+            }); 
+            $.ajax({
+                type: 'POST',
+                url: '{% url "execute_code" %}',
+                data: { python_code: code },
+                dataType: 'json',
+                success: function(response) {
+                    $('#output').empty();
+                    if ('result' in response) {
+                        let resultArray = response.result;
+                        console.log(resultArray);
+                    
+                        // Check if the result is an array
+                        if (Array.isArray(resultArray)) {
+                            // Loop through the array and append each element to #output
+                            for (let i = 0; i < resultArray.length; i++) {
+                                $('#output').append(resultArray[i] + '<br>');
+                            }
+                        } else if (typeof resultArray === 'string') {
+                            // If it's a string, display it with line breaks
+                            $('#output').html(resultArray.replace(/\n/g, '<br>'));
+                        } else {
+                            // If it's neither a string nor an array, just set the content as is
+                            $('#output').html(resultArray);
+                        }
+                    } else if ('error' in response) {
+                        // Display the error message
+                        $('#output').text("무엇인가 잘못되었어! 다시 생각하고 작성해 볼까?");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#output').empty();
+                    // Handle AJAX error
+                    console.error('AJAX error:', status, error);
+                    $('#output').text("무엇인가 잘못되었어! 다시 생각하고 작성해 볼까?");
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="navigator-container">
+        <a class = 'fairytale_home' onclick="savepage()">다른동화 보러가기</a>
+        <a class="gotohome" onclick="logout()">나가기</a>
+    </div>
+    <div class="conversation-container"></div>
+    <div class="drag-drop" style="display: none;">
+        <p>한번 도전해 볼까?</p>
+        <div id="fillInTheBlank">
+            <p>문제 5번</p>
+            <p>21 ÷ 3 + 7 X 12 - 6 = ?</p>
+            <p>number_1 = 21</p>
+            <p>number_2 = 3</p>
+            <p>number_3 = 7</p>
+            <p>number_4 = 12</p>
+            <p>number_5 = 6</p>
+            <p>답: <span id="dragDropBox" class="drop-box" ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></span></p>
+            <p>보기:<span id="a1" class="drag-item" draggable="true" ondragstart="drag(event)">81</span>
+                <span id="a2" class="drag-item" draggable="true" ondragstart="drag(event)">82</span>
+                <span id="a3" class="drag-item" draggable="true" ondragstart="drag(event)">83</span>
+                <span id="a4" class="drag-item" draggable="true" ondragstart="drag(event)">84</span>
+                <span id="a5" class="drag-item" draggable="true" ondragstart="drag(event)">85</span>
+                <span id="a6" class="drag-item" draggable="true" ondragstart="drag(event)">86</span></p>
+                <button onclick="checkAnswer()">확인하기</button>
+                <button onclick="clearAnswer()">비우기</button>
+            <div id = "code-block-header">
+                <h2>여기를 이용해서 한번 답을 직접 찾아봐!</h2>
+                </div>
+            <div id="input">
+                <textarea id="python-code" placeholder="number_1 = 21..."></textarea>
+            </div>
+            <div id="output"></div>
+            <div id="submit-button-area">
+                <a class="code-submit-button" onclick="executeCode()">코드 실행!</a>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

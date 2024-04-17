@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snow White - Part 4</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_common.css' %}">
+    <script>
+
+        var user = {
+            username: "{{ user.username }}",
+        };
+
+        $(document).ready(function() {
+            const conversations = {{ conversations|safe }};
+            let currentLine = 0;
+            const container = $('.conversation-container');
+            const dragdrop = $('#fillInTheBlank');
+            const robotName = "{{ user.robotname }}";
+        
+            const displayConversation = () => {
+                if (currentLine < conversations.length) {
+                    const item = $('<div>').addClass('dialogue-container');
+                    const text = $('<p>').addClass('dialogue-text').text(conversations[currentLine].text.replace(/robot/g, robotName));
+                    if (conversations[currentLine].image) {
+                        const img = $('<img>').addClass('speaker-image').attr('src', "{% static '' %}" + conversations[currentLine].image).attr('alt', 'Image');
+                        item.append(img);
+                    }
+                    if (conversations[currentLine].image) {
+                        if (conversations[currentLine].speaker == 'robot'){
+                            const speakerName = $('<span>').addClass('speaker-name').text(robotName + ':');
+                            text.prepend(speakerName);
+                        }
+                        else{
+                            const speakerName = $('<span>').addClass('speaker-name').text(conversations[currentLine].speaker + ':');
+                            text.prepend(speakerName);
+                        }
+                        
+                    }
+                    item.append(text);
+                    container.append(item.hide().fadeIn(1000));
+        
+                    $('html, body').animate({
+                        scrollTop: $(document).height()
+                    }, 7000);
+        
+                    currentLine++;
+                } else {
+                    clearInterval(conversationInterval);
+                    const nextButton = $('<a>').attr('href', "{% url 'snowwhite_05' %}").addClass('next-button').text('다음이야기');
+                    container.append(nextButton);
+                }
+            };
+        
+            const conversationInterval = setInterval(displayConversation, 7000); // 2-second interval for demonstration
+            displayConversation(); // Show the first conversation immediately
+        });
+        
+        function savepage() {
+            const username = user.username
+        
+            // Make an AJAX request to the Django view
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajaxSetup({
+                headers: { 'X-CSRFToken': csrftoken }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "savepage" %}',
+                data: {
+                    username: username,
+                    fairytale: 'snowwhite',
+                    page: '04'
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Handle the success response
+                    console.log(response);
+                    if (response.status == 'success') {
+                        window.location.href = '{% url "fairytale_home" %}';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+        
+        function logout() {
+            // Make an AJAX request to the Django view for logging out
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "logout_and_home" %}',
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function(response) {
+                    // Redirect to the home page after successful logout
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="navigator-container">
+        <a class = 'fairytale_home' onclick="savepage()">다른동화 보러가기</a>
+        <a class="gotohome" onclick="logout()">나가기</a>
+    </div>
+    <div class="conversation-container"></div>
+
+
+</body>
+</html>

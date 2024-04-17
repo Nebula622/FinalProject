@@ -1,0 +1,27 @@
+/* Dialogue container styling */
+.dialogue-container {
+    display: flex;
+    align-items: flex-start; /* Align to the top of the photo */
+    margin-bottom: 10px;
+  }
+  
+  /* Speaker image styling */
+  .speaker-image {
+    width: 100px; /* Adjust image width */
+    height: auto; /* Automatically adjust image height */
+    margin-right: 10px;
+  }
+  
+  /* Dialogue text styling */
+  .dialogue-text {
+    background-color: #f0f0f0; /* Chat text background color */
+    padding: 10px; /* Dialog text padding */
+    border-radius: 5px; /* Dialog text rounded corners */
+    flex: 1; /* Set dialogue text to occupy remaining space */
+  }
+  
+  /* Speaker name styling */
+  .speaker-name {
+    font-weight: bold; /* Speaker name in bold */
+    margin-right: 5px;
+  }

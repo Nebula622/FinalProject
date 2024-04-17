@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snow White3 - Part 6</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_common.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_codegpt.css' %}">
+    <script>
+        var user = {
+            username: "{{ user.username }}",
+        };
+
+        $(document).ready(function() {
+            const conversations = {{ conversations|safe }};
+            let currentLine = 0;
+            const container = $('.conversation-container');
+            const codeBlock = $('#code-block');
+            const robotName = "{{ user.robotname }}";
+        
+            const displayConversation = () => {
+                if (currentLine < conversations.length) {
+                    const item = $('<div>').addClass('dialogue-container');
+                    const text = $('<p>').addClass('dialogue-text').text(conversations[currentLine].text.replace(/robot/g, robotName));
+                    if (conversations[currentLine].image) {
+                        const img = $('<img>').addClass('speaker-image').attr('src', "{% static '' %}" + conversations[currentLine].image).attr('alt', 'Image');
+                        item.append(img);
+                    }
+                    if (conversations[currentLine].image) {
+                        if (conversations[currentLine].speaker == 'robot'){
+                            const speakerName = $('<span>').addClass('speaker-name').text(robotName + ':');
+                            text.prepend(speakerName);
+                        }
+                        else{
+                            const speakerName = $('<span>').addClass('speaker-name').text(conversations[currentLine].speaker + ':');
+                            text.prepend(speakerName);
+                        }
+                        
+                    }
+                    item.append(text);
+                    container.append(item.hide().fadeIn(1000));
+
+                    $('html, body').animate({
+                        scrollTop: $(document).height()
+                    }, 7000);
+
+                    currentLine++;
+                } else {
+                    clearInterval(conversationInterval);
+                    const nextButton = $('<a>').attr('href', "{% url 'snowwhite3_07' %}").addClass('next-button').text('다음이야기');
+                    container.append(nextButton);
+                    // Show the code block
+                    codeBlock.show();
+                }
+            };
+
+            const conversationInterval = setInterval(displayConversation, 7000); // 2-second interval for demonstration
+            displayConversation(); // Show the first conversation immediately
+        });
+
+        function executeCode() {
+            // Get the code from the textarea
+            const code = $('#python-code').val();
+    
+            // Make an AJAX request to the Django view
+            var csrftoken = Cookies.get('csrftoken'); 
+                
+            // set the CSRF token in the AJAX headers 
+            $.ajaxSetup({ 
+                headers: { 'X-CSRFToken': csrftoken } 
+            }); 
+            $.ajax({
+                type: 'POST',
+                url: '{% url "execute_code" %}',
+                data: { python_code: code },
+                dataType: 'json',
+                success: function(response) {
+                    $('#output').empty();
+                    if ('result' in response) {
+                        let resultArray = response.result;
+                        console.log(resultArray);
+                    
+                        // Check if the result is an array
+                        if (Array.isArray(resultArray)) {
+                            // Loop through the array and append each element to #output
+                            for (let i = 0; i < resultArray.length; i++) {
+                                $('#output').append(resultArray[i] + '<br>');
+                            }
+                        } else if (typeof resultArray === 'string') {
+                            // If it's a string, display it with line breaks
+                            $('#output').html(resultArray.replace(/\n/g, '<br>'));
+                        } else {
+                            // If it's neither a string nor an array, just set the content as is
+                            $('#output').html(resultArray);
+                        }
+                    } else if ('error' in response) {
+                        // Display the error message
+                        $('#output').text("무엇인가 잘못되었어! 다시 생각하고 작성해 볼까?");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#output').empty();
+                    // Handle AJAX error
+                    console.error('AJAX error:', status, error);
+                    $('#output').text("무엇인가 잘못되었어! 다시 생각하고 작성해 볼까?");
+                }
+            });
+        }
+        function savepage() {
+            const username = user.username
+
+            // Make an AJAX request to the Django view
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajaxSetup({
+                headers: { 'X-CSRFToken': csrftoken }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "savepage" %}',
+                //data의 상세 내역은 수정을 요망
+                data: {
+                    username: username,
+                    fairytale: 'snowwhite3',
+                    page: '06' 
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Handle the success response
+                    console.log(response);
+                    if (response.status == 'success') {
+                        window.location.href = '{% url "fairytale_home" %}';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+        function logout() {
+            // Make an AJAX request to the Django view for logging out
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "logout_and_home" %}',
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function(response) {
+                    // Redirect to the home page after successful logout
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+
+
+        $(document).ready(function() { 
+            // Send the form on enter keypress and avoid if shift is pressed 
+            $('#prompt').keypress(function(event) { 
+                if (event.keyCode === 13 && !event.shiftKey) { 
+                    event.preventDefault(); 
+                    $('form').submit(); 
+                } 
+            }); 
+            $('form').on('submit', function(event) { 
+                event.preventDefault(); 
+                // get the CSRF token from the cookie 
+                var csrftoken = Cookies.get('csrftoken'); 
+                
+                // set the CSRF token in the AJAX headers 
+                $.ajaxSetup({ 
+                    headers: { 'X-CSRFToken': csrftoken } 
+                }); 
+                // Get the prompt 
+                var prompt = $('#prompt').val(); 
+                var dateTime = new Date(); 
+                var time = dateTime.toLocaleTimeString(); 
+                console.log(prompt)
+                // Add the prompt to the response div 
+                $('#response').append('<p>('+ time + ') Q: ' + prompt + '</p>'); 
+                // Clear the prompt 
+                $('#prompt').val(''); 
+                $.ajax({ 
+                    url: '{% url "get_completion" %}', // 수정된 부분
+                    type: 'POST', 
+                    data: {prompt: prompt}, 
+                    dataType: 'json', 
+                    success: function(data) { 
+                        $('#response').append('<p>('+ time + ') A: ' + data.response + '</p>'); 
+                    } 
+                }); 
+            }); 
+        });     
+    </script>
+</head>
+<body>
+    <div class="navigator-container">
+        <a class="fairytale_home" onclick="savepage()">다른동화 보러가기</a>
+        <a class="gotohome" onclick="logout()">나가기</a>
+    </div>
+    <div class="conversation-container"></div>
+    
+    <!-- Code block -->
+    <div class = "code-container">
+        <div id="code-block" style="display: none;">
+            <div id="explanation">텍스트의 전체 길이를 알아보기 위해 len&#40;&#41;을 사용할 수 있습니다.<br>
+                아래의 예시를 통해 확인해 봅시다.<br>
+                <br>
+                예시 텍스트<br>
+                text = "백설공주는 하얗다"<br>
+                length = len&#40;text&#41;<br>
+                print&#40;length&#41; : 9<br>
+            </div>
+            <div id = "code-block-header">
+            <h2>한번 연습해 볼까?</h2>
+            </div>
+            <div id="input">
+                <textarea id="python-code" placeholder="예시 텍스트, 또는 나만의 텍스트를 이용해 글자의 수를 세어봅시다!"></textarea>
+            </div>
+            <div id="output"></div>
+            <div id="submit-button-area">
+                <a class="code-submit-button" onclick="executeCode()">코드 실행!</a>
+            </div>
+            <div class="mb-3"> 
+                <form method="post" id="myForm"> <!-- ID 추가 -->
+                    {% csrf_token %} 
+                    <label for="prompt" class="form-label"><strong>질문하세요! </strong></label> 
+                    <textarea class="form-control" type="textarea" id="prompt" name="prompt" rows="3" placeholder="코딩에 대한 질문이라면 환영이야!"></textarea> 
+                    <br> 
+                    <div id="submit-button-area">
+                        <button class="btn" type="submit">물어보기</button> 
+                    </div>
+                </form>
+                <h3>대화내역:</h3> 
+                <div id="response"></div> 
+            </div> 
+        </div>
+
+    </div>
+</body>
+</html>

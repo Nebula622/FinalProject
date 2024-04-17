@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snow White5</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_home.css' %}">
+    <script>
+        $(document).ready(function() {
+            const conversations = JSON.parse('{{ conversations|escapejs }}');
+            let currentLine = 0;
+            const container = $('.conversation-container');
+    
+            const displayConversation = () => {
+                if (currentLine < conversations.length) {
+                    const item = $('<div>').addClass('conversation-item');
+                    const img = $('<img>').attr('src', "{% static '' %}" + conversations[currentLine].image).attr('alt', 'Image').hide();
+                    const text = $('<p>').text(conversations[currentLine].text).hide();
+                    item.append(img).append(text);
+                    container.empty().append(item);
+                    img.fadeIn(1000);
+                    text.fadeIn(1000);
+                    setTimeout(() => {
+                        img.fadeOut(1000);
+                        text.fadeOut(1000, () => {
+                            currentLine++;
+                            displayConversation();
+                        });
+                    }, 7000); // 실제 display 되는 시간, 테스트를 위해 줄여놓음
+                } else {
+                    const nextButton = $('<a>').attr('href', "{% url 'snowwhite5_01' %}").addClass('next-button').text('다음이야기');
+                    const replayButton = $('<button>').addClass('replay-button').text('다시보기').click(() => {
+                        currentLine = 0;
+                        displayConversation();
+                    });
+                    container.empty().append(nextButton)
+                    container.append(replayButton);
+                }
+            };
+            
+            displayConversation(); // Show the first conversation immediately
+        });
+    </script>
+</head>
+<body>
+    <div class="conversation-container">
+        {% for conversation in conversations %}
+            <div class="conversation-item">
+                <img src="{% static conversation.image %}" alt="Image">
+                <p>{{ conversation.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+/* Dialogue container styling */
+.navigator-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100; /* Ensure it appears above other elements */
+  }
+  
+  /* Style for the links inside the navigator container */
+  .navigator-container a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px;
+    background-color: #4285f4;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  /* Hover effect for the links */
+  .navigator-container a:hover {
+    background-color: aqua;
+    color: black;
+  }
+  
+  /* Style for the conversation container */
+  .conversation-container {
+    margin-top: 50px; /* Adjust the top margin as needed */
+    padding: 20px;
+  }
+  
+  
+  .dialogue-container {
+      display: flex;
+      align-items: flex-start; /* Align to the top of the photo */
+      margin-bottom: 10px;
+    }
+    
+    /* Speaker image styling */
+    .speaker-image {
+      width: 100px; /* Adjust image width */
+      height: auto; /* Automatically adjust image height */
+      margin-right: 10px;
+    }
+    
+    /* Dialogue text styling */
+    .dialogue-text {
+      background-color: #f0f0f0; /* Chat text background color */
+      padding: 10px; /* Dialog text padding */
+      border-radius: 5px; /* Dialog text rounded corners */
+      flex: 1; /* Set dialogue text to occupy remaining space */
+    }
+    
+    /* Speaker name styling */
+    .speaker-name {
+      font-weight: bold; /* Speaker name in bold */
+      margin-right: 5px;
+    }
+  
+    .next-button {
+      display: block;
+      width: 200px; /* Adjust width as needed */
+      height: 50px; /* Adjust height as needed */
+      line-height: 50px;
+      text-align: center;
+      background-color: #4285f4; /* Button background color */
+      color: #ffffff; /* Text color */
+      border-radius: 10px; /* Rounded corners */
+      position: relative;
+      top: 50%;
+      left: 50%;
+      font-size: 90%;
+      margin-top: 20px;
+      transform: translate(-50%, -50%);
+      text-decoration: none; /* Remove underline */
+  }
+  
+  /* Hover effect */
+  .next-button:hover {
+      background-color: aqua; /* Change background color on hover */
+      color: black;
+  }
+
+  #robot-naming {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+  }
+
+  #robot-naming-header {
+    width: 100%;
+    text-align: center;
+  }
+  
+  #robot-name {
+    width: 80%; /* 50% width with 5px margin on the right */
+    align-items: center;
+    height: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    float: left;
+  }
+
+  .robot-naming-button {
+    display: block;
+    width: 100px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+    margin-top: 10px;
+    text-align: center;
+    background-color: #4285f4; /* Button background color */
+    color: #ffffff; /* Text color */
+    border-radius: 10px; /* Rounded corners */
+    position: relative;
+    top: 50%;
+    left: 50%;
+    font-size: 90%;
+    margin-top: 20px;
+    transform: translate(-50%, -50%);
+    text-decoration: none; /* Remove underline */
+}
+
+/* Hover effect */
+.robot-naming-button:hover {
+    background-color: aqua; /* Change background color on hover */
+    color: black;
+}

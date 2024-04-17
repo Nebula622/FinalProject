@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fairytale_home.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var user = {
+            username: "{{ user.username }}",
+        };
+
+        function logout() {
+            // Make an AJAX request to the Django view for logging out
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "logout_and_home" %}',
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function(response) {
+                    // Redirect to the home page after successful logout
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+
+        function redirectToPage(fairyTaleName, page) {
+            url = fairyTaleName + page
+            console.log(url)
+            window.location.href = url;
+        }
+
+        function load_progress(username, fairytale_name){
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajaxSetup({
+                headers: { 'X-CSRFToken': csrftoken }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "load_progress" %}',
+                data: {
+                    username: username,
+                    fairytale: fairytale_name,
+                },
+                success: function(response) {
+                    console.log(response)
+                    page = response.page
+                    if (response.status =='success') {
+                        var userConfirmed = window.confirm("전에 본 곳으로 이동할게!");
+                        if (userConfirmed) {
+                            // User clicked "OK" or "Yes"
+                            redirectToPage(fairytale_name, page);
+                        } else {
+                            // User clicked "Cancel" or "No"
+                            // Handle the cancellation or perform alternative actions
+                            page = "/intro"
+                            redirectToPage(fairytale_name, page);
+                            console.log("User canceled the operation.");
+                        }
+                    }
+
+                    else{
+                        alert(response.message);
+                        redirectToPage(fairytale_name, page);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.log(response)
+                    console.error('AJAX error:', status, error);
+                }
+            });
+        }
+
+        function load_progress_snowwhite() {
+            const username = user.username
+            const fairytale_name = 'snowwhite'
+            load_progress(username, fairytale_name)
+        }
+
+        function load_progress_cinderella() {
+            const username = user.username
+            const fairytale_name = 'cinderella'
+            load_progress(username, fairytale_name)
+        }
+
+        function load_progress_jack() {
+            const username = user.username
+            const fairytale_name = 'jack'
+            load_progress(username, fairytale_name)
+        }
+    </script>
+</head>
+<body>
+    <div class="top-container">
+        <div class="title">어떤 동화를 읽어볼까?</div>
+        <div class="welcome">
+            {% if user %}
+            <p>환영해요 {{ user.username }}님!</p>
+            {% else %}
+            <p>반가워요!</p>
+            {% endif %}
+            <button type="button" onclick="logout()">나가기</button>
+        </div>
+    </div>
+    <div class="image-button-container">
+        <a onclick = 'load_progress_snowwhite()'>
+            <!-- Image button -->
+            <img src="{% static 'images/SNOWWHITE_HAPPY.png' %}" alt="Snow White">
+            <p>백설공주</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/SNOWWHITE_SAD.png' %}" alt="Fairy_tale_01">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/BOT_PALACE.png' %}" alt="Fairy_tale_02">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/QUEEN_HURT.png' %}" alt="Fairy_tale_03">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/SNOWWHITE_HAPPY.png' %}" alt="Snow White">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/SNOWWHITE_SAD.png' %}" alt="Fairy_tale_01">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/BOT_PALACE.png' %}" alt="Fairy_tale_02">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/QUEEN_HURT.png' %}" alt="Fairy_tale_03">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/SNOWWHITE_HAPPY.png' %}" alt="Snow White">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/SNOWWHITE_SAD.png' %}" alt="Fairy_tale_01">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/BOT_PALACE.png' %}" alt="Fairy_tale_02">
+            <p>Example Description 1</p>
+        </a>
+        <a href="{% url 'snowwhite_home' %}">
+            <!-- Image button -->
+            <img src="{% static 'images/QUEEN_HURT.png' %}" alt="Fairy_tale_03">
+            <p>Example Description 1</p>
+        </a>
+        <!-- Add more image links here -->
+    </div>
+</body>
+</html>

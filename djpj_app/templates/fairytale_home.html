@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fairytale_home.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fairytale_home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script>
+        var user = {
+            username: "{{ user.username }}",
+        };
+
+        function logout() {
+            // Make an AJAX request to the Django view for logging out
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "logout_and_home" %}',
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function(response) {
+                    // Redirect to the home page after successful logout
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+
+        function redirectToPage(fairyTaleName, page) {
+            url = fairyTaleName + page
+            console.log(url)
+            window.location.href = url;
+        }
+
+        function load_progress(username, fairytale_name){
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajaxSetup({
+                headers: { 'X-CSRFToken': csrftoken }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "load_progress" %}',
+                data: {
+                    username: username,
+                    fairytale: fairytale_name,
+                },
+                success: function(response) {
+                    console.log(response)
+                    page = response.page
+                    if (response.status =='success') {
+                        var userConfirmed = window.confirm("전에 본 곳으로 이동할게!");
+                        if (userConfirmed) {
+                            // User clicked "OK" or "Yes"
+                            redirectToPage(fairytale_name, page);
+                        } else {
+                            // User clicked "Cancel" or "No"
+                            // Handle the cancellation or perform alternative actions
+                            page = "/intro"
+                            redirectToPage(fairytale_name, page);
+                            console.log("User canceled the operation.");
+                        }
+                    }
+
+                    else{
+                        alert(response.message);
+                        redirectToPage(fairytale_name, page);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.log(response)
+                    console.error('AJAX error:', status, error);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $('.slider-2 .slides > div').click(function(){
+                text = ($('.slider-2 .slides > div.active').html());
+                console.log(text);
+                var searchTerm = "value";
+                index =  text.indexOf(searchTerm);
+                index = index + 7;
+                temp = 0;
+                string = '';
+                while (text[index + temp] !== '"'){
+                    string += text[index + temp];
+                    temp++;
+                }
+                console.log(string);
+                const username = user.username;
+                load_progress(username, string);
+            });
+        });
+
+        $(document).ready(function() {
+            $('.slider-2 .page-nav > div').click(function() {
+                var $this = $(this);
+
+                var $pagenav = $this.parent();
+                var $current = $pagenav.find('.active');
+                
+                $current.removeClass('active');
+                $this.addClass('active');
+        
+                var index = $this.index();
+                var $slider = $this.closest('.slider-2');
+                
+                $slider.find('.slides > div.active').removeClass('active');
+                $slider.find('.slides > div').eq(index).addClass('active');
+            });
+        
+            $('.slider-2 > .side-btns > div:first-child').click(function() {
+                var $slider = $(this).closest('.slider-2');
+                var $current = $slider.find('.page-nav > div.active');
+                var $prev = $current.prev();
+            
+                if ($prev.length === 0) {
+                    $prev = $slider.find('.page-nav > div:last-child');
+                }
+            
+                $current.removeClass('active');
+                $prev.addClass('active');
+            
+                var index = $prev.index();
+                $slider.find('.slides > div.active').removeClass('active');
+                $slider.find('.slides > div').eq(index).addClass('active');
+            });
+            
+            $('.slider-2 > .side-btns > div:last-child').click(function() {
+                var $slider = $(this).closest('.slider-2');
+                var $current = $slider.find('.page-nav > div.active');
+                var $next = $current.next();
+            
+                if ($next.length === 0) {
+                    $next = $slider.find('.page-nav > div:first-child');
+                }
+            
+                $current.removeClass('active');
+                $next.addClass('active');
+            
+                var index = $next.index();
+                $slider.find('.slides > div.active').removeClass('active');
+                $slider.find('.slides > div').eq(index).addClass('active');
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div class="top-container">
+        <div class="title">어떤 동화를 읽어볼까?</div>
+        <div class="welcome">
+            {% if user %}
+            <p>환영해요 {{ user.username }}님!</p>
+            {% else %}
+            <p>반가워요!</p>
+            {% endif %}
+            <button type="button" onclick="logout()">나가기</button>
+        </div>
+    </div>
+    <div class="slider-2">
+    
+        <div class="side-btns">
+            <div><span><i class="fas fa-caret-left"></i></i></span></div>
+            <div><span><i class="fas fa-caret-right"></i></span></div>
+        </div>
+        <div class="slides">
+            <div class="active" >
+                <img src="{% static 'images/SNOWWHITE_CHILD.png' %}" alt="Snow White">
+                <div value = "snowwhite" class="caption01">백설공주 - 어린시절의 이야기</div>
+                <div class="caption02">어린 백설공주와 함께하며 배우는 파이썬의 기초!</div>
+                <div class="caption03">기초적인 변수와 사칙연산에 대해 배웁니다.</div>
+            </div>
+            <div><img src="{% static 'images/SNOWWHITE_HAPPY.png' %}" alt="Snow White">
+                <div value = "snowwhite2" class="caption01">백설공주 - 소녀가 되어</div>
+                <div class="caption02">소녀가 된 백설공주와 함께하며 배우는 파이썬의 기초+ !</div>
+                <div class="caption03">다양한 변수들에 대해서 배웁니다.</div>
+            </div>
+            <div><img src="{% static 'images/WITCH_MIRROR.png' %}" alt="Snow White">
+                <div value = "snowwhite3" class="caption01">백설공주 - 마녀와 마법의 거울</div>
+                <div class="caption02">마녀의 거울을 통해 배우는 문자, 문자열 제어</div>
+                <div class="caption03">문자와 문자열의 제어에 대해서 배웁니다.</div>
+            </div>
+            <div><img src="{% static 'images/DWARVES.png' %}" alt="Snow White">
+                <div value = "snowwhite4" class="caption01">백설공주 - 난장이들과 함께</div>
+                <div class="caption02">난장이들과 함께 더욱더 심화된 파이썬에 대해 배워보세요</div>
+                <div class="caption03">조건문과 제어문에 대해서 배웁니다.</div>
+            </div>
+            <div><img src="{% static 'images/SNOWWHITE_POISONED_APPLE.png' %}" alt="Snow White">
+                <div value = "snowwhite5" class="caption01">백설공주 - 독사과</div>
+                <div class="caption02">백설공주 이야기의 마지막</div>
+                <div class="caption03">지금까지 배운걸 모아서 복습합니다.</div>
+            </div>
+        </div>
+        
+        <div class="page-nav">
+            <div class="active"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</body>
+</html>

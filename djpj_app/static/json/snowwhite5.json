@@ -1,0 +1,148 @@
+{
+    "intro":[
+        { "text": "마지막 이야기", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "사냥꾼은 왕비에게 숲속의 수상한 집에 대해 알려주었습니다.", "image": "images/HUNTER.png" },
+        { "text": "왕비는 그 이야기를 듣고 직접 숲속의 집으로 찾아가보기로 하였습니다.", "image": "images/WITCH_MEET_HUNTER.png" },
+        { "text": "아니나 다를까, 왕비는 난쟁이들과 함께 있는 백설공주를 발견했습니다.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "하지만 난장이들을 피해 백설공주만 공격하기는 어려운 일이었습니다.", "image": "images/DWARVES.png" },
+        { "text": "그러나, 왕비는 사과를 이용해서 백설공주를 독살하려고 합니다.", "image": "images/SNOWWHITE_POISONED_APPLE.png" },
+        { "text": "백설공주는, 이 음모에서 무사히 살아남을 수 있을까요?", "image": "images/SNOWWHITE_SAD.png" }
+    ],
+    "01":[
+        { "text": "어느날 부터인가, 알 수 없는 사과가 문 앞에 놓여있기 시작했습니다."},
+        { "speaker": "난쟁이 1", "text": "이게 왠 사과지?", "image": "images/DWARF_1.png" },
+        { "speaker": "난쟁이 2", "text": "요즘 사과를 먹기 참 힘든데, 먹어볼까?", "image": "images/DWARF_2.png" },
+        { "speaker": "난쟁이 1", "text": "기다려! 이런걸 함부로 먹으면 어떡해?", "image": "images/DWARF_1.png" },
+        { "speaker": "난쟁이 3", "text": "와구와구... 움? 이미 한 입 베어 물었는데? 맛있어!", "image": "images/DWARF_3.png" },
+        { "speaker": "난쟁이 2", "text": "야 그건 반칙이지!", "image": "images/DWARF_2.png" },
+        { "text": "시끌벅적해진 난쟁이들을 보면서 백설공주가 말했습니다."},
+        { "speaker": "백설공주", "text": "우리도 하나 먹어볼까? 사과 못 먹은지 오래됐잖아 robot.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "그러나 고개를 저으며 말했습니다."},
+        { "speaker": "robot", "text": "아니! 뭔가 수상해. 일단 먹지 말아보자.", "image": "images/BOT_SNOWY_FOREST.png" }
+    ],
+    "02":[
+        { "text": "어느새 사과가 문 앞에 놓여있는것이 일상이 되어갔습니다."},
+        { "text": "사과는 일주일에 한번씩, 문앞에 놓여있었습니다."},
+        { "speaker": "난쟁이 1", "text": "누군지는 잘 모르겠지만, 참 고마운 사람이야 냠냠", "image": "images/DWARF_1.png" },
+        { "text": "처음엔 robot의 말을 듣고 수상하다고 생각한 백설공주도, 난쟁이들이 계속 맛있게 사과를 먹는 것을 보니 점점 유혹을 참을 수 없었습니다."},
+        { "speaker": "백설공주", "text": "나도 사과가 먹고싶어 robot. 우리 하나만 먹어보자.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "아무래도 뭔가 수상한데... 다음 바구니 까지만 참아보자!", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "히잉... 알았어.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "그러던 어느 날, 사과 바구니가 여느날처럼 문 앞에 놓여있었습니다."},
+        { "text": "백설공주는 이번에야 말로 사과를 먹겠다는 마음가짐으로 문을 열고, 사과를 가지고 들어왔습니다."},
+        { "speaker": "백설공주", "text": "맛있겠다! 이게 얼마만의 사과야! 헤헤헤.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "백설공주가 크게 한 입 베어먹으려는 그 순간, robot의 목소리가 들렸습니다."},
+        { "speaker": "robot", "text": "잠깐만! 기다려 줘!", "image": "images/BOT_SNOWY_FOREST.png" }
+    ],
+    "03":[
+        { "speaker": "백설공주", "text": "왜에에! 나 정말 먹고싶단 말이야!", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "좋아, 먹기 전에 근데 우리 검사 하나만 해보자!", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "검사? 어떤걸 얘기하는거야?", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "내가 어젯밤 찾아봤는데, 난쟁이들은 독같은 것에 면역이 있어서, 난장이들한테 안전하다고 우리한테 안전하다는 보장이 없다구!", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "text": "그 얘기를 들은 백설공주가 깜짝 놀라며 말했습니다."},
+        { "speaker": "백설공주", "text": "도...독?? 설마 사과에 독이 발려있다는 이야기야?", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "꼭 그런건 아니지만... 확인해 보고 먹어도 늦지 않잖아?", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "text": "백설공주는 놀란 가슴을 쓸어내리며 말했습니다."},
+        { "speaker": "백설공주", "text": "그건 맞아. 그럼 뭘 어떻게 확인해봐야 하는데?", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "그러자 robot의 얼굴에 씨익 웃는 미소가 나타났습니다."},
+        { "speaker": "robot", "text": "지금까지 우리가 배운걸 이용해 볼때야.", "image": "images/BOT_SNOWY_FOREST.png" }
+    ],
+    "04":[
+        { "speaker": "백설공주", "text": "좋아. 저 분류기를 이용해 보자는거지?", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "맞아! 사과를 한번 분류해보자. 독이 있는것과 없는걸로!", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "그럼 뭐부터 하면 좋을까?", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "먼저 각 사과들의 리스트를 만들어보자! 전체 사과들을 리스트에 담아보자.", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "리스트? 기억이 날 것 같기도 하고...", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "하핳 리스트가 어떻게 만드는지 기억이 안날 수 있지. 한 번 복습해볼까?", "image": "images/BOT_SNOWY_FOREST.png" }
+    ],
+    "05":[
+        { "speaker": "백설공주", "text": "좋아 리스트가 완성됐어.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "이제 리스트 개수만큼 반복을 해야겠지? for문을 기억해?", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "흠 이것도 복습이 필요하겠는걸?", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "좋아, 아래 설명을 읽고 한번 따라해보라고!", "image": "images/BOT_SNOWY_FOREST.png" }
+    ],
+    "06":[
+        { "speaker": "백설공주", "text": "좋아, 리스트 안에 있는 사과 개수만큼 반복할 수 있게 됐어!", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "그럼 이제 반복할 내용을 찾아야겠지?", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "흠... 독이 있는지 찾아야하니까...", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "if 조건문으로 '독' 이라는 글자를 찾아볼까?", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "좋아! 내가 말하려던게 바로 그거였어!", "image": "images/SNOWWHITE_HAPPY.png" }
+    ],
+    "07":[
+        { "speaker": "robot", "text": "완벽해! 이제 작성한 코드를 가지고 독사과는 몇개인지 한번 찾아보자!", "image": "images/BOT_SNOWY_FOREST.png" }
+    ],
+    "08":[
+        { "speaker": "백설공주", "text": "세상에! 이렇게 독사과가 많았다니!", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "백설공주는 독사과가 담긴 바구니를 보며 가슴을 쓸어내렸습니다."},
+        { "speaker": "robot", "text": "이게 누구짓일까 백설?", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "speaker": "백설공주", "text": "아마 새엄마의 짓일거야... 절대 용서못해...!", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "백설공주 분노에 차서 말했습니다."},
+        { "speaker": "백설공주", "text": "이 사실을 아버지께 알려야겠어. 새엄마는 날 죽이려 한 사람이라고!", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "robot", "text": "그렇지만... 어떻게 왕궁으로 무사히 가겠어? 분명 널 죽이려 한 사냥꾼도 숲에 도사리고 있을지 몰라.", "image": "images/BOT_SNOWY_FOREST.png" },
+        { "text": "백설공주는 잠시 고민하다가 이내 싱긋 웃으며 말했습니다."},
+        { "speaker": "백설공주", "text": "아무래도 우리가 연극을 좀 해야겠어.", "image": "images/SNOWWHITE_HAPPY.png" }
+    ],
+    "09":[
+        { "text": "며칠후, 왕궁에는 슬픈 울음소리만이 울려 퍼지고 있었습니다."},
+        { "speaker": "왕", "text": "아이고, 내 딸 백설아...", "image": "images/KING_FACE.png" },
+        { "text": "백설이 숲에서 쓰러진 채 발견되었다는 소식을 듣고, 왕은 계속 울기만 했습니다."},
+        { "speaker": "새 왕비", "text": "흑흑... 그래도 여보, 이럴 때 일수록 울기만 하면 안돼요.", "image": "images/WITCH_QUEEN_FACE.png" },
+        { "text": "새 왕비는 속으로 쾌재를 불렀으나, 왕 앞이었기 때문에 짐짓 슬픈 척을 하고 있었습니다."},
+        { "speaker": "왕", "text": "내 딸... 내 하나뿐인 딸이...", "image": "images/KING_FACE.png" },
+        { "text": "왕은 슬픔과 동시에 크나큰 분노를 느꼈습니다."},
+        { "speaker": "왕", "text": "절대.. 내가 절대 내 딸을 이렇게 만든 사람을 가만두지 않겠다!", "image": "images/KING_FACE.png" },
+        { "speaker": "새 왕비", "text": "그럼요 물론이죠.", "image": "images/WITCH_QUEEN_FACE.png" },
+        { "text": "왕비는 뻔뻔하게도 왕의 말에 맞장구를 치었습니다."},
+        { "speaker": "새 왕비", "text": "아 저기 백설공주의 관이 오는군요.", "image": "images/WITCH_QUEEN_FACE.png" }
+    ],
+    "10":[
+        { "text": "백설공주의 시신이 담긴 관을 담고 하인들이 왕궁으로 들어왔습니다." , "image": "images/SERVANT_CARRYING_COFFIN.png" },
+        { "text": "왕은 슬프게 울며 눈을 감은 백설공주를 바라보았습니다.", "image": "images/SNOWWHITE_FUNERAL.png" },  
+        { "text": "그 순간 말도 안되는 일이 일어났습니다.", "image": "images/SNOWWHITE_FUNERAL.png" }, 
+        { "text": "죽은 줄로만 알았던 백설공주가 눈을 뜬것이었습니다!", "image": "images/SNOWWHITE_REVIVE.png" } 
+    ],
+    "11":[
+        { "speaker": "왕", "text": "아니! 백설아!!!", "image": "images/KING_FACE.png" },
+        { "text": "왕은 깨어난 백설을 껴안았습니다." },
+        { "speaker": "백설공주", "text": "아버지, 저 돌아왔어요.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "새 왕비", "text": "아니... 네가 어떻게...", "image": "images/WITCH_QUEEN_FACE.png" },
+        { "text": "왕비는 귀신이라도 본 듯한 표정으로 백설공주를 바라보았습니다." },
+        { "speaker": "백설공주", "text": "당신이 보낸 독사과라면, 먹지않았어요 어머니.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "왕은 놀란표정으로 백설공주에게 물었습니다." },
+        { "speaker": "왕", "text": "독사과라니, 그게 무슨말이냐 백설아. 네 어머니가 왜 너를 죽이려고해?", "image": "images/KING_FACE.png" },
+        { "speaker": "백설공주", "text": "어머니가 저를 죽이기 위해 사냥꾼을 보냈고, 도망쳐서 난쟁이들의 집에 숨어있었어요.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "백설공주", "text": "그러자 절 죽이기 위한 다른 방법으로 독사과를 보내서, 저를 독살하려고 했죠.", "image": "images/SNOWWHITE_HAPPY.png" }
+    ],
+    "12":[
+        { "speaker": "새 왕비", "text": "거짓말! 거짓말이에요! 제가 백설을 왜 죽이겠어요?", "image": "images/WITCH_QUEEN_FACE.png" },
+        { "text": "왕비는 뻔뻔하게도 울면서 왕에게 하소연했습니다." },
+        { "speaker": "새 왕비", "text": "제가 백설을 얼마나 이뻐했는데요, 아시잖아요. 백설이 잠깐 정신을 잃은 충격에 꿈을 꿨나봐요.", "image": "images/WITCH_QUEEN_FACE.png" },
+        { "text": "백설은 기가 찬다는 표정으로 왕비를 바라보다가, 손가락을 딱 하고 튕겼습니다." },
+        { "text": "그러자 밧줄에 꽁꽁 묶인 사냥꾼이 난쟁이들에게 묶여 같이 들어왔습니다." },
+        { "speaker": "난쟁이 2", "text": "숲을 돌아다니던 사냥꾼, 우리가 잡아왔다!", "image": "images/DWARF_2.png" },
+        { "speaker": "난쟁이 1", "text": "백설을 죽이려고 한 사냥꾼이지오.", "image": "images/DWARF_1.png" },
+        { "text": "왕 앞에서 겁에질린 사냥꾼은 벌벌 떨며 말했습니다." },
+        { "speaker": "사냥꾼", "text": "아냐, 아냐! 나는 그저 왕비님이 시키는대로 한 죄 밖에 없어! 아니야!!!", "image": "images/HUNTER.png" },
+        { "speaker": "백설공주", "text": "이것뿐만이 아니에요. 증거는 또 있어요.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "백설공주가 손가락을 한번 더 튕기자, 다른 난장이가 낑낑거리며 거울을 들고 나타났습니다." },
+        { "speaker": "난쟁이 3", "text": "거울아 거울아, 백설공주가 말한 게 모두 사실이니?", "image": "images/DWARF_3.png" },
+        { "speaker": "거울", "text": "네, 맞습니다. 왕비는 제게 백설공주를 몰래 죽일 방법을 묻고, 사냥꾼을 고용해 백설공주를 죽이려고 했습니다.", "image": "images/A_MIRROR.png" },
+        { "speaker": "백설공주", "text": "어때요, 이래도 내가 지금 거짓말을 하는거 같나요?", "image": "images/SNOWWHITE_HAPPY.png" }
+    ],
+    "13":[
+        { "text": "백설공주의 폭로에, 왕비는 순식간에 얼빠진 표정이 되었습니다." },
+        { "text": "왕은 분노에 차서 말했습니다." },
+        { "speaker": "왕", "text": "실망이요 왕비. 나는 당신을 믿었는데 말이오.", "image": "images/KING_FACE.png" },
+        { "text": "왕은 왕비를 감옥에 가두라고 명했습니다." },
+        { "speaker": "새 왕비", "text": "안돼! 안돼애!!!!", "image": "images/WITCH_QUEEN_FACE.png" },
+        { "text": "왕비는 병사들에게 끌려서 왕궁의 감옥으로 끌려갔습니다." },
+        { "speaker": "왕", "text": "미안하다 백설아. 이 아빠가 눈이 잠시 멀었었구나.", "image": "images/KING_FACE.png" },
+        { "speaker": "백설공주", "text": "아니에요 아빠. 전 집에 무사히 돌아올 수 있어서 기뻐요.", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "speaker": "왕", "text": "여봐라, 당장 백설이 돌아온 잔치를 준비해라!", "image": "images/KING_FACE.png" },
+        { "speaker": "난쟁이 2", "text": "와 축제다 축제!", "image": "images/DWARF_2.png" },
+        { "speaker": "난쟁이 1", "text": "신난다! 마시고 떠들자!", "image": "images/DWARF_1.png" },
+        { "text": "기뻐하는 모습을 보며 백설은, 자기 옆에 있는 robot의 얼굴을 바라보았습니다." },
+        { "speaker": "백설공주", "text": "너 덕분이야 robot. 정말 고마워!", "image": "images/SNOWWHITE_HAPPY.png" },
+        { "text": "이후 백설공주는 아버지와 난쟁이들, 그리고 robot까지 함께 행복하게 살았답니다." }
+    ]
+}

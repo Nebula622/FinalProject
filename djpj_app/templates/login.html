@@ -1,0 +1,60 @@
+<!-- login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Login</title>
+        <script>
+            function login() {
+                const username = $('#username').val();
+                const password = $('#password').val();
+    
+                // Make an AJAX request to the Django view
+                var csrftoken = Cookies.get('csrftoken');
+                $.ajaxSetup({
+                    headers: { 'X-CSRFToken': csrftoken }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "userlogin" %}',
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        // Handle the success response
+                        console.log(response);
+                        if (response.status == 'success') {
+                            window.location.href = '{% url "fairytale_home" %}';
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle the error response
+                        console.error('AJAX error:', status, error);
+                        alert(error);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div class="login-container">
+            <h2>시작하기</h2>
+            <form id="loginForm">
+                {% csrf_token %}
+                <input type="text" name="username" id="username" placeholder="나의 이름은..." required>
+                <input type="password" name="password" id="password" placeholder="비밀번호!" required>
+                <button type="button" onclick="login()">내가 돌아왔다!</button>
+            </form>
+            <p>아직 이름이 없니? <a href="{% url 'usersignin' %}">여기서 만들어보자!</a></p>
+        </div>
+    </body>
+</html>

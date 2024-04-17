@@ -1,0 +1,88 @@
+/*snowwhuite_06.css*/
+
+#code-block {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+}
+
+#explanation {
+  width: 80%; /* 50% width with 5px margin on the left */
+  height: auto;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box; /* Include border and padding in the width */
+  float: right;
+  font-style: normal;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 15px;
+}
+
+#code-block-header {
+  width: 100%;
+  text-align: center;
+}
+
+#input {
+  width: 80%; /* 50% width with 5px margin on the right */
+  align-items: center;
+  height: 200px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  float: left;
+}
+
+#python-code{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  font-style: normal;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+}
+
+#output {
+  width: 80%; /* 50% width with 5px margin on the left */
+  height: auto;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box; /* Include border and padding in the width */
+  float: right;
+  font-style: normal;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+}
+
+#submit-button-area {
+  width: 100%;
+  text-align: center; /* Align button to the right */
+  margin-top: 10px; /* Adjust as needed */
+}
+
+.code-submit-button {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #4285f4;
+  color: #ffffff;
+  border-radius: 10px;
+  font-size: 90%;
+  text-decoration: none;
+}
+
+.code-submit-button:hover {
+  background-color: aqua;
+  color: black;
+}

@@ -1,0 +1,74 @@
+.conversation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style for each conversation item */
+.conversation-item {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Style for the image within each conversation item */
+.conversation-item img {
+    width: 100%; /* Adjust the image size as needed */
+    opacity: 0.5; /* Set the image opacity to 50% */
+    display: block;
+}
+
+/* Style for the text displayed over the image */
+.conversation-item p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.7); /* Background color with 70% opacity */
+    padding: 10px;
+}
+
+.next-button {
+    display: block;
+    width: 200px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    line-height: 50px;
+    text-align: center;
+    background-color: #4285f4; /* Button background color */
+    color: #ffffff; /* Text color */
+    border-radius: 10px; /* Rounded corners */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 90%;
+    transform: translate(-50%, -50%);
+    text-decoration: none; /* Remove underline */
+}
+
+/* Hover effect */
+.next-button:hover {
+    background-color: aqua; /* Change background color on hover */
+    color: black;
+}
+
+.replay-button{
+    display: block;
+    width: 200px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    line-height: 50px;
+    text-align: center;
+    background-color: #4285f4; /* Button background color */
+    color: #ffffff; /* Text color */
+    border-radius: 10px; /* Rounded corners */
+    position: absolute;
+    top: calc(50% + 55px);
+    left: 50%;
+    font-size: 90%;
+    transform: translate(-50%, -50%);
+    text-decoration: none; /* Remove underline */
+}
+
+.replay-button:hover {
+    background-color: aqua; /* Change background color on hover */
+    color: black;
+}

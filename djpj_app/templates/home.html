@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <div class="banner">
+        <h1>동화와 함께하는 코딩 교육</h1>
+        <div class="start-button-container">
+            <a href="{% url 'userlogin' %}">시작하기</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="content">
+            <h2>우리 사이트는?</h2>
+            <p>동화의 세계에 푹 빠지면서<br>코딩에 대해서도 배워볼 수 있어요!</p>
+        </div>
+        <div class="content">
+            <img src="{% static 'images/A_MIRROR.png' %}" alt="Left Image">
+        </div>
+        <div class="content">
+            <img src="{% static 'images/SNOWWHITE_CHILD.png' %}" alt="Right Image">
+        </div>
+    </div>
+    <div class="container">
+        <div class="content">
+            <img src="{% static 'images/QUEEN_SPINNING_WHEEL.png' %}" alt="Left Image">
+        </div>
+        <div class="content">
+            <img src="{% static 'images/HUNTER.png' %}" alt="Right Image">
+        </div>
+        <div class="content">
+            <p>동화 속 주인공들과 함께<br>이야기를 진행하며<br>마주치는 문제를 해결하며<br>주인공들을 도와봅시다!</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="content">
+            <img src="{% static 'images/DWARVES.png' %}" alt="Left Image">
+        </div>
+        <div class="content">
+            <img src="{% static 'images/KING.png' %}" alt="Middle Image">
+        </div>
+        <div class="content">
+            <img src="{% static 'images/WITCH_MEET_HUNTER.png' %}" alt="Right Image">
+        </div>
+    </div>
+</body>
+</html>

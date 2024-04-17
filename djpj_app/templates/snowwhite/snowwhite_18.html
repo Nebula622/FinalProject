@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snow White - Part 18</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_common.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/snowwhite_dragdrop.css' %}">
+    <script>
+
+        var user = {
+            username: "{{ user.username }}",
+        };
+
+        $(document).ready(function() {
+            const conversations = {{ conversations|safe }};
+            let currentLine = 0;
+            const container = $('.conversation-container');
+            const dragdrop = $('.drag-drop');
+            const robotName = "{{ user.robotname }}";
+        
+            const displayConversation = () => {
+                if (currentLine < conversations.length) {
+                    const item = $('<div>').addClass('dialogue-container');
+                    const text = $('<p>').addClass('dialogue-text').text(conversations[currentLine].text.replace(/robot/g, robotName));
+                    if (conversations[currentLine].image) {
+                        const img = $('<img>').addClass('speaker-image').attr('src', "{% static '' %}" + conversations[currentLine].image).attr('alt', 'Image');
+                        item.append(img);
+                    }
+                    if (conversations[currentLine].image) {
+                        if (conversations[currentLine].speaker == 'robot'){
+                            const speakerName = $('<span>').addClass('speaker-name').text(robotName + ':');
+                            text.prepend(speakerName);
+                        }
+                        else{
+                            const speakerName = $('<span>').addClass('speaker-name').text(conversations[currentLine].speaker + ':');
+                            text.prepend(speakerName);
+                        }
+                        
+                    }
+                    item.append(text);
+                    container.append(item.hide().fadeIn(1000));
+        
+                    $('html, body').animate({
+                        scrollTop: $(document).height()
+                    }, 7000);
+        
+                    currentLine++;
+                } else {
+                    clearInterval(conversationInterval);
+                    dragdrop.show();
+                }
+            };
+        
+            const conversationInterval = setInterval(displayConversation, 7000); // 2-second interval for demonstration
+            displayConversation(); // Show the first conversation immediately
+        });
+        
+        function savepage() {
+            const username = user.username
+        
+            // Make an AJAX request to the Django view
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajaxSetup({
+                headers: { 'X-CSRFToken': csrftoken }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "savepage" %}',
+                data: {
+                    username: username,
+                    fairytale: 'snowwhite',
+                    page: '18'
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Handle the success response
+                    console.log(response);
+                    if (response.status == 'success') {
+                        window.location.href = '{% url "fairytale_home" %}';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+        
+        function logout() {
+            // Make an AJAX request to the Django view for logging out
+            var csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "logout_and_home" %}',
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function(response) {
+                    // Redirect to the home page after successful logout
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error('AJAX error:', status, error);
+                    alert(error);
+                }
+            });
+        }
+
+
+        var originalDragItems = document.querySelectorAll(".drag-item");
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+        
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            var draggedElement = document.getElementById(data);
+        
+            // Clone the dragged element to preserve the original
+            var clone = draggedElement.cloneNode(true);
+            clone.setAttribute("draggable", "true");
+            clone.setAttribute("id", "clone_" + data);
+            
+            // Append the clone to the drop box
+            event.target.appendChild(clone);
+        }
+        
+        function checkAnswer() {
+            var dropBox = document.getElementById("dragDropBox");
+            var answer = dropBox.innerText.trim().toLowerCase();
+            const container = $('.drag-drop');
+        
+            // Replace 'fine' with the correct answer
+            if (answer === "number_1") {
+                alert("잘했어!");
+                const nextButton = $('<a>').attr('href', "{% url 'snowwhite_19' %}").addClass('next-button').text('다음이야기');
+                container.append(nextButton);
+            } else {
+                alert("음... 뭔가 잘못됐어...");
+            }
+        }
+        
+        function clearAnswer() {
+            var dropBox = document.getElementById("dragDropBox");
+            dropBox.innerHTML = "";
+        
+            // Restore draggable items to their original state
+            originalDragItems.forEach(function (item) {
+                var clone = item.cloneNode(true);
+                clone.setAttribute("draggable", "true");
+                clone.setAttribute("id", item.id);
+                dropBox.appendChild(clone);
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="navigator-container">
+        <a class = 'fairytale_home' onclick="savepage()">다른동화 보러가기</a>
+        <a class="gotohome" onclick="logout()">나가기</a>
+    </div>
+    <div class="conversation-container"></div>
+    <div class="drag-drop" style="display: none;">
+        <p>한번 도전해 볼까?</p>
+        <div id="fillInTheBlank">
+            <p>아래에서 변수의 이름으로 사용될 수 있는걸 찾아볼까?</p>
+            <p><span id="dragDropBox" class="drop-box" ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></span> = 10</p>
+            <p>보기: <span id="a1" class="drag-item" draggable="true" ondragstart="drag(event)">일번숫자</span>
+                <span id="a2" class="drag-item" draggable="true" ondragstart="drag(event)">1number</span>
+                <span id="a3" class="drag-item" draggable="true" ondragstart="drag(event)">number_1</span>
+                <span id="a4" class="drag-item" draggable="true" ondragstart="drag(event)">number#1</span>
+                <span id="a5" class="drag-item" draggable="true" ondragstart="drag(event)">1_Number</span>
+                <span id="a6" class="drag-item" draggable="true" ondragstart="drag(event)">Number One</span></p>
+                <button onclick="checkAnswer()">확인하기</button>
+                <button onclick="clearAnswer()">비우기</button>
+        </div>
+    </div>
+
+
+</body>
+</html>
